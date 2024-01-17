@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://22fg3ja4i2yc"]
+[gd_scene load_steps=7 format=3 uid="uid://22fg3ja4i2yc"]
 
 [ext_resource type="PackedScene" uid="uid://1xos702r1o27" path="res://scenes/entities/player/player.tscn" id="1_e26tj"]
 [ext_resource type="PackedScene" uid="uid://dg4yecaox8lhp" path="res://scenes/entities/toast/toast.tscn" id="2_sqals"]
+[ext_resource type="PackedScene" uid="uid://dt1gk0r2prpa3" path="res://scenes/entities/knife/knife.tscn" id="3_6ucxa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u7etj"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,16 +17,6 @@ sky = SubResource("Sky_thrag")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xal3a"]
-size = Vector3(0.1, 0.008, 0.1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehig6"]
-albedo_color = Color(1, 0.545098, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_j6ag0"]
-material = SubResource("StandardMaterial3D_ehig6")
-size = Vector3(0.1, 0.008, 0.1)
-
 [node name="Level" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -37,18 +28,8 @@ shadow_bias = 0.001
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_uff6i")
 
-[node name="Toast" type="StaticBody3D" parent="."]
-transform = Transform3D(0.993064, 0, -0.117572, 0, 1, 0, 0.117572, 0, 0.993064, 0, 0, 0)
-visible = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Toast"]
-shape = SubResource("BoxShape3D_xal3a")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Toast"]
-mesh = SubResource("BoxMesh_j6ag0")
-
 [node name="Player" parent="." instance=ExtResource("1_e26tj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016037, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00849494, 0)
 
 [node name="CameraPivot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.696113, 0.717932, 0, -0.717932, 0.696113, 0, 0.078172, 0.0773214)
@@ -70,4 +51,8 @@ shadow_normal_bias = 2.0
 spot_range = 1.0
 spot_angle = 40.0
 
-[node name="Toast2" parent="." instance=ExtResource("2_sqals")]
+[node name="Toast" parent="." instance=ExtResource("2_sqals")]
+
+[node name="Knife" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_6ucxa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0.1, 0)
+player = NodePath("../Player")

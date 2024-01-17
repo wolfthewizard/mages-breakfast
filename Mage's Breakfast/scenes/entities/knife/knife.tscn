@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dt1gk0r2prpa3"]
+[gd_scene load_steps=6 format=3 uid="uid://dt1gk0r2prpa3"]
+
+[ext_resource type="Script" path="res://scenes/entities/knife/knife.gd" id="1_suyes"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjm2p"]
 resource_name = "metal"
@@ -41,16 +43,22 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_mln21")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_36mpa"]
-size = Vector3(0.018396, 0.002, 0.0892725)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ufn0c"]
+size = Vector3(0.0149814, 0.002, 0.0939663)
 
-[node name="knife" type="AnimatableBody3D"]
+[node name="Knife" type="Node3D"]
+script = ExtResource("1_suyes")
 
 [node name="Knife" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0475965)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.048, 0, 0)
 mesh = SubResource("ArrayMesh_peqb2")
 skeleton = NodePath("")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00282593, 0, -0.00272705)
-shape = SubResource("BoxShape3D_36mpa")
+[node name="Killbox" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Killbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00150928, 0, -0.00218335)
+shape = SubResource("BoxShape3D_ufn0c")
+
+[connection signal="body_entered" from="Killbox" to="." method="_on_killbox_body_entered"]
