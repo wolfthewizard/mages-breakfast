@@ -52,6 +52,11 @@ jump={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="player"
+3d_physics/layer_2="environment"
+
 [physics]
 
-3d/default_gravity=0.02
+3d/default_gravity=0.05

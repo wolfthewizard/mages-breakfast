@@ -59,6 +59,8 @@ mesh = SubResource("ArrayMesh_8rfod")
 skeleton = NodePath("")
 
 [node name="Butter" type="AnimatableBody3D" parent="."]
+collision_layer = 2
+collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Butter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00165316, 0)

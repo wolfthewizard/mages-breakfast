@@ -1,43 +1,33 @@
-[gd_scene load_steps=8 format=3 uid="uid://1xos702r1o27"]
+[gd_scene load_steps=4 format=3 uid="uid://1xos702r1o27"]
 
 [ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_qrldh"]
-[ext_resource type="PackedScene" uid="uid://co3cq26fja3er" path="res://scenes/entities/player/player.glb" id="2_pjucf"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_smkc2"]
-albedo_color = Color(1, 1, 0.160784, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_qt8s4"]
-material = SubResource("StandardMaterial3D_smkc2")
-radius = 0.003
-height = 0.01
+[ext_resource type="PackedScene" uid="uid://0rujqhtftjvf" path="res://scenes/entities/player/player_mesh.tscn" id="2_jn42l"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8okkk"]
 radius = 0.002
 height = 0.008
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5rhcp"]
-albedo_color = Color(0, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_26hqp"]
-material = SubResource("StandardMaterial3D_5rhcp")
-size = Vector3(0.005, 0.002, 0.002)
-
 [node name="Player" type="CharacterBody3D"]
+collision_mask = 3
 script = ExtResource("1_qrldh")
 
-[node name="player" parent="." instance=ExtResource("2_pjucf")]
-transform = Transform3D(-0.5, 0, -4.37114e-08, 0, 0.5, 0, 4.37114e-08, 0, -0.5, 0, 0, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0)
-visible = false
-mesh = SubResource("CapsuleMesh_qt8s4")
+[node name="PlayerMesh" parent="." instance=ExtResource("2_jn42l")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.004, 0)
 shape = SubResource("CapsuleShape3D_8okkk")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00653259, -0.00228753)
-visible = false
-mesh = SubResource("BoxMesh_26hqp")
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+collision_mask = 2
+spring_length = 0.1
+margin = 0.001
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+current = true
+size = 0.1
+near = 0.01
+far = 1.0
