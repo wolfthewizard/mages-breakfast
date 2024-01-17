@@ -32,15 +32,15 @@ func _unhandled_input(event):
 				spring_arm.spring_length = min(spring_arm.spring_length + ZOOM_STEP, ZOOM_MAX)
 			elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				spring_arm.spring_length = max(spring_arm.spring_length - ZOOM_STEP, ZOOM_MIN)
-				
+
 
 func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
-
+	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+	
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
 	direction = direction.rotated(Vector3.UP, camera_pivot.rotation.y)
@@ -55,5 +55,5 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	
 	move_and_slide()

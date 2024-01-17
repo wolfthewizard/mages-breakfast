@@ -9,7 +9,6 @@ class_name Knife extends Node3D
 var tween: Tween
 
 
-
 func _ready():
 	mow_attack(Vector3(0, 0.1, 0.08), Vector3(0, 0.1, -0.08))
 
