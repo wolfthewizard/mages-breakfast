@@ -19,7 +19,7 @@ render_priority = 0
 shader = ExtResource("1_4njvg")
 shader_parameter/scaling = 0.33
 shader_parameter/angle = 0.0
-shader_parameter/scroll_speed_mult = 0.25
+shader_parameter/scroll_speed_mult = 0.5
 shader_parameter/source_texture = ExtResource("2_6s0yj")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_nq7mb"]

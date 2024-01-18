@@ -19,10 +19,12 @@ const JUMPING_GRAVITY = 0.05
 var jump_held: bool = false
 
 
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
 func _unhandled_input(event):
-	if event is InputEventMouseButton:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	elif event.is_action_released("jump"):
+	if event.is_action_released("jump"):
 		jump_held = false
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:

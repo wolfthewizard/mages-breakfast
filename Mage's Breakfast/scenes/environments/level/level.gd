@@ -10,10 +10,10 @@ func _ready():
 
 
 func _unhandled_input(event):
-	if event.is_action_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if event.is_action_pressed("ui_cancel") and not game_over.visible and not pause.visible:
 		get_tree().paused = true
 		pause.visible = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _on_player_cut():

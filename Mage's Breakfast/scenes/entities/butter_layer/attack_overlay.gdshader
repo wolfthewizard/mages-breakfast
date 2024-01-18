@@ -2,7 +2,7 @@ shader_type spatial;
 uniform sampler2D source_texture;
 uniform float scaling = 0.33;
 uniform float angle = 0.0;
-uniform float scroll_speed_mult = 0.25;
+uniform float scroll_speed_mult = 0.5;
 
 void fragment() {
 	float angle2 = angle + PI;
