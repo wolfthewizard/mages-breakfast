@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://22fg3ja4i2yc"]
+[gd_scene load_steps=11 format=3 uid="uid://22fg3ja4i2yc"]
 
 [ext_resource type="Script" path="res://scenes/environments/level/level.gd" id="1_b04xe"]
 [ext_resource type="PackedScene" uid="uid://1xos702r1o27" path="res://scenes/entities/player/player.tscn" id="1_e26tj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dt1gk0r2prpa3" path="res://scenes/entities/knife/knife.tscn" id="3_6ucxa"]
 [ext_resource type="PackedScene" uid="uid://d1imseaepoh2n" path="res://scenes/entities/mage/mage.tscn" id="4_5tvat"]
 [ext_resource type="PackedScene" uid="uid://ow23n1crj4ft" path="res://scenes/gui/game_over/game_over.tscn" id="6_eut7i"]
+[ext_resource type="PackedScene" uid="uid://1hsucvccu86" path="res://scenes/gui/pause/pause.tscn" id="7_lgdpi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u7etj"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -55,6 +56,9 @@ player = NodePath("../Player")
 knife = NodePath("../Knife")
 
 [node name="GameOver" parent="." instance=ExtResource("6_eut7i")]
+visible = false
+
+[node name="Pause" parent="." instance=ExtResource("7_lgdpi")]
 visible = false
 
 [connection signal="attack_sequence_finished" from="Knife" to="Mage" method="_on_knife_attack_sequence_finished"]
