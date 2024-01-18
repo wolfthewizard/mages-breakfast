@@ -5,9 +5,17 @@ signal attack_sequence_finished
 
 
 @export var player: CharacterBody3D
-@export var attack_preparation: float = 1
-@export var attack_delay: float = 0.2
-@export var attack_duration: float = 2
+@export var attack_preparation: float = 1:
+	get:
+		return attack_preparation * time_scaling
+@export var attack_delay: float = 0.2:
+	get:
+		return attack_delay * time_scaling
+@export var attack_duration: float = 2:
+	get:
+		return attack_duration * time_scaling
+
+var time_scaling: float = 1.0
 
 var tween: Tween
 
