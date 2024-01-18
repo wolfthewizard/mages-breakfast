@@ -8,12 +8,15 @@ extends CharacterBody3D
 
 const TURN_SMOOTHING = 0.15
 const SPEED = 0.025
-const JUMP_VELOCITY = 0.025
 const ZOOM_STEP = 0.005
 const ZOOM_MIN = 0.05
 const ZOOM_MAX = 0.2
 
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+const JUMP_VELOCITY = 0.025
+const GRAVITY = 0.15
+const JUMPING_GRAVITY = 0.05
+
+var jump_held: bool = false
 
 
 func _unhandled_input(event):
@@ -22,6 +25,8 @@ func _unhandled_input(event):
 	elif event.is_action_pressed("ui_cancel"):
 		#Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		get_tree().quit()
+	elif event.is_action_released("jump"):
+		jump_held = false
 	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		if event is InputEventMouseMotion:
 			camera_pivot.rotate_y(-event.relative.x * 0.01)
@@ -36,10 +41,14 @@ func _unhandled_input(event):
 
 func _physics_process(delta):
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		if jump_held and velocity.y > 0:
+			velocity.y -= JUMPING_GRAVITY * delta
+		else:
+			velocity.y -= GRAVITY * delta
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		jump_held = true
 	
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
