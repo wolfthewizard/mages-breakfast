@@ -11,13 +11,20 @@ config_version=5
 [application]
 
 config/name="Mage's Breakfast"
-run/main_scene="res://scenes/environments/level/level.tscn"
+run/main_scene="res://scenes/environments/menu/menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 EventBus="*res://patterns/event_bus/event_bus.gd"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=3
+window/stretch/mode="viewport"
 
 [file_customization]
 
@@ -26,7 +33,8 @@ folder_colors={
 "res://patterns/": "purple",
 "res://scenes/": "yellow",
 "res://scenes/entities/": "red",
-"res://scenes/environments/": "green"
+"res://scenes/environments/": "teal",
+"res://scenes/gui/": "green"
 }
 
 [input]
@@ -61,7 +69,3 @@ jump={
 
 3d_physics/layer_1="player"
 3d_physics/layer_2="environment"
-
-[physics]
-
-3d/default_gravity=0.2
