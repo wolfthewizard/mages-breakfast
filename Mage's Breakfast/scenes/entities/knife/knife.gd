@@ -34,4 +34,4 @@ func mow_attack(from: Vector3, to: Vector3):
 
 func _on_killbox_body_entered(body):
 	if body == player:
-		player.queue_free()
+		EventBus.player_cut.emit()
