@@ -17,7 +17,6 @@ func _ready():
 
 
 func _on_attack_in_preparation_emmited(angle: float, prep_time: float):
-	print(prep_time)
 	attack_overlay.mesh.material.set_shader_parameter("angle", angle)
 	tween = create_tween()
 	tween.tween_property(attack_overlay, "transparency", OVERLAY_MIN_TRANSPARENCY, prep_time * OVERLAY_FADE_IN_PART)
