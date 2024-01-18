@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://22fg3ja4i2yc"]
+[gd_scene load_steps=8 format=3 uid="uid://22fg3ja4i2yc"]
 
 [ext_resource type="PackedScene" uid="uid://1xos702r1o27" path="res://scenes/entities/player/player.tscn" id="1_e26tj"]
 [ext_resource type="PackedScene" uid="uid://dg4yecaox8lhp" path="res://scenes/entities/toast/toast.tscn" id="2_sqals"]
 [ext_resource type="PackedScene" uid="uid://dt1gk0r2prpa3" path="res://scenes/entities/knife/knife.tscn" id="3_6ucxa"]
+[ext_resource type="PackedScene" uid="uid://d1imseaepoh2n" path="res://scenes/entities/mage/mage.tscn" id="4_5tvat"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u7etj"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -44,5 +45,10 @@ spot_angle = 40.0
 [node name="Toast" parent="." instance=ExtResource("2_sqals")]
 
 [node name="Knife" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_6ucxa")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, 0.1, 0)
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.08, 0.168986, 0)
 player = NodePath("../Player")
+
+[node name="Mage" parent="." node_paths=PackedStringArray("knife") instance=ExtResource("4_5tvat")]
+knife = NodePath("../Knife")
+
+[connection signal="attack_sequence_finished" from="Knife" to="Mage" method="_on_knife_attack_sequence_finished"]

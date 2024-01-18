@@ -1,29 +1,27 @@
 class_name Knife extends Node3D
 
 
+signal attack_sequence_finished
+
+
 @export var player: CharacterBody3D
 @export var attack_preparation: float = 1
 @export var attack_delay: float = 0.2
-@export var attack_duration: float = 5
+@export var attack_duration: float = 2
 
 var tween: Tween
 
 
-func _ready():
-	mow_attack(Vector3(0, 0.1, 0.08), Vector3(0, 0.1, -0.08))
-
-
-func _physics_process(_delta):
-	pass
-
-
 func mow_attack(from: Vector3, to: Vector3):
 	var original_position = global_position
-	tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_parallel(true)
+	var original_basis = basis
+	tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "global_position", from, attack_preparation)
-	tween.tween_property(self, "basis", Basis.looking_at(to - from, Vector3.UP), attack_preparation).set_delay(attack_delay)
-	tween.chain().tween_property(self, "global_position", to, attack_duration)
-	tween.chain().tween_property(self, "global_position", original_position, attack_preparation)
+	tween.parallel().tween_property(self, "basis", Basis.looking_at(to - from, Vector3.UP), attack_preparation).set_delay(attack_delay)
+	tween.tween_property(self, "global_position", to, attack_duration)
+	tween.tween_property(self, "global_position", original_position, attack_preparation)
+	tween.parallel().tween_property(self, "basis", original_basis, attack_preparation)
+	tween.tween_callback(func(): attack_sequence_finished.emit())
 
 
 func _on_killbox_body_entered(body):
