@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://22fg3ja4i2yc"]
+[gd_scene load_steps=14 format=3 uid="uid://22fg3ja4i2yc"]
 
 [ext_resource type="Script" path="res://scenes/environments/level/level.gd" id="1_b04xe"]
 [ext_resource type="PackedScene" uid="uid://1xos702r1o27" path="res://scenes/entities/player/player.tscn" id="1_e26tj"]
@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://d1imseaepoh2n" path="res://scenes/entities/mage/mage.tscn" id="4_5tvat"]
 [ext_resource type="PackedScene" uid="uid://ow23n1crj4ft" path="res://scenes/gui/game_over/game_over.tscn" id="6_eut7i"]
 [ext_resource type="PackedScene" uid="uid://1hsucvccu86" path="res://scenes/gui/pause/pause.tscn" id="7_lgdpi"]
+[ext_resource type="PackedScene" uid="uid://dotjgdvxra5xo" path="res://assets/fork.glb" id="8_iehgv"]
+[ext_resource type="PackedScene" uid="uid://bw7iwc78rrfke" path="res://assets/plate.glb" id="9_sva6d"]
+[ext_resource type="PackedScene" uid="uid://rqstoeg74s3e" path="res://assets/table.glb" id="10_uvkax"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u7etj"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -60,5 +63,16 @@ visible = false
 
 [node name="Pause" parent="." instance=ExtResource("7_lgdpi")]
 visible = false
+
+[node name="Decorations" type="Node3D" parent="."]
+
+[node name="fork" parent="Decorations" instance=ExtResource("8_iehgv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.124978, 0, 0)
+
+[node name="plate" parent="Decorations" instance=ExtResource("9_sva6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00359157, 0)
+
+[node name="table" parent="Decorations" instance=ExtResource("10_uvkax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.804055, -0.404338)
 
 [connection signal="attack_sequence_finished" from="Knife" to="Mage" method="_on_knife_attack_sequence_finished"]
