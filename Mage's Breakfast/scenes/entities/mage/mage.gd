@@ -32,9 +32,17 @@ func prepare_stab():
 	knife.stab_attack(source, dest)
 
 
+func prepare_whirlwind():
+	var flip_direction: bool = randf() < 0.5
+	var source = Vector3(0, 0.01, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
+	var dest = Vector3(0, 0.01, 0)
+	knife.whirlwind_attack(source, dest, flip_direction)
+
+
 func _on_attack_timer_timeout():
-	prepare_mow()
+	#prepare_mow()
 	#prepare_stab()
+	prepare_whirlwind()
 
 
 func _on_knife_attack_sequence_finished():
