@@ -9,6 +9,11 @@ class_name Mage extends Node3D
 @onready var attack_timer: Timer = $AttackTimer
 
 const TIME_SCALING_FACTOR = 0.95
+const ATTACK_THRESHOLDS = [
+	0.5,
+	0.85,
+	1
+]
 
 var time_scaling: float = 1.0
 
@@ -40,9 +45,13 @@ func prepare_whirlwind():
 
 
 func _on_attack_timer_timeout():
-	#prepare_mow()
-	#prepare_stab()
-	prepare_whirlwind()
+	var decider = randf()
+	if decider < ATTACK_THRESHOLDS[0]:
+		prepare_mow()
+	elif decider < ATTACK_THRESHOLDS[1]:
+		prepare_stab()
+	else:
+		prepare_whirlwind()
 
 
 func _on_knife_attack_sequence_finished():
