@@ -28,7 +28,6 @@ func mow_attack(from: Vector3, to: Vector3):
 	var original_position = global_position
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
-		).rotated(Vector3.UP, -PI / 2
 		).scaled(original_basis.get_scale())
 	tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "global_position", from, attack_preparation)
@@ -58,6 +57,7 @@ func stab_attack(from: Vector3, to: Vector3):
 	tween.tween_callback(func(): attack_sequence_finished.emit())
 
 
+# TODO: unify knife orientation to improve telegraphing (rotation always to back)
 func whirlwind_attack(from: Vector3, to: Vector3, flip_direction: bool):
 	var original_position = global_position
 	var original_basis = basis

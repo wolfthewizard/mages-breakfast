@@ -35,6 +35,11 @@ func prepare_stab():
 	var dest_point = randf_range(-0.025, 0.025)
 	var dest = Vector3(dest_point, 0.01, 0) if on_x else Vector3(0, 0.01, dest_point)
 	knife.stab_attack(source, dest)
+	EventBus.stab_attack_preparing.emit(
+		Vector2(source.z, source.x), 
+		Vector2(dest.z, dest.x), 
+		knife.attack_preparation + knife.attack_delay + knife.attack_duration
+	)
 
 
 func prepare_whirlwind():
