@@ -5,7 +5,7 @@ signal attack_sequence_finished
 
 
 @export var player: CharacterBody3D
-@export var attack_preparation: float = 1:
+@export var attack_preparation: float = 2:
 	get:
 		return attack_preparation * time_scaling
 @export var attack_delay: float = 0.2:
@@ -14,6 +14,7 @@ signal attack_sequence_finished
 @export var attack_duration: float = 2:
 	get:
 		return attack_duration * time_scaling
+@export var stab_attack_linger: float = 1		# intentional, should not scale with time
 
 var time_scaling: float = 1.0
 
@@ -25,8 +26,21 @@ func mow_attack(from: Vector3, to: Vector3):
 	var original_basis = basis
 	tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "global_position", from, attack_preparation)
-	tween.parallel().tween_property(self, "basis", Basis.looking_at(to - from, Vector3.UP), attack_preparation).set_delay(attack_delay)
-	tween.tween_property(self, "global_position", to, attack_duration)
+	tween.parallel().tween_property(self, "basis", Basis.looking_at(to - from, Vector3.UP).scaled(original_basis.get_scale()), attack_preparation)
+	tween.tween_property(self, "global_position", to, attack_duration).set_delay(attack_delay)
+	tween.tween_property(self, "global_position", original_position, attack_preparation)
+	tween.parallel().tween_property(self, "basis", original_basis, attack_preparation)
+	tween.tween_callback(func(): attack_sequence_finished.emit())
+
+
+func stab_attack(from: Vector3, to: Vector3):
+	var original_position = global_position
+	var original_basis = basis
+	tween = create_tween().set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(self, "global_position", from, attack_preparation)
+	tween.parallel().tween_property(self, "basis", Basis.looking_at(to - from, Vector3.UP).rotated(Vector3.UP, -PI / 2).scaled(original_basis.get_scale()), attack_preparation)
+	tween.tween_property(self, "global_position", to, attack_duration).set_delay(attack_delay)
+	tween.tween_property(self, "global_position", from, attack_preparation).set_delay(stab_attack_linger)
 	tween.tween_property(self, "global_position", original_position, attack_preparation)
 	tween.parallel().tween_property(self, "basis", original_basis, attack_preparation)
 	tween.tween_callback(func(): attack_sequence_finished.emit())

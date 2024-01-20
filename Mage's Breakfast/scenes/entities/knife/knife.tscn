@@ -47,6 +47,7 @@ shadow_mesh = SubResource("ArrayMesh_mln21")
 size = Vector3(0.0149814, 0.002, 0.0939663)
 
 [node name="Knife" type="Node3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.000273779, 1.49012e-08, 0.000445008)
 script = ExtResource("1_suyes")
 
 [node name="Knife" type="MeshInstance3D" parent="."]

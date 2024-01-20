@@ -4,6 +4,7 @@ class_name Mage extends Node3D
 @export var knife: Knife
 @export var butter_layer: ButterLayer
 @export var mow_attack_distance: float = 0.15
+@export var stab_attack_distance: float = 0.3
 
 @onready var attack_timer: Timer = $AttackTimer
 
@@ -20,8 +21,20 @@ func prepare_mow():
 	EventBus.attack_in_preparation.emit(angle, knife.attack_preparation + knife.attack_delay + knife.attack_duration)
 
 
+func prepare_stab():
+	var angle: float = randf_range(0, TAU)
+	var source = Vector3(0, 0.01, stab_attack_distance).rotated(Vector3.UP, angle)
+	angle += PI / 4
+	angle = fmod(angle, TAU)
+	var on_x: bool = fmod(angle, PI) < PI / 2
+	var dest_point = randf_range(-0.025, 0.025)
+	var dest = Vector3(dest_point, 0.01, 0) if on_x else Vector3(0, 0.01, dest_point)
+	knife.stab_attack(source, dest)
+
+
 func _on_attack_timer_timeout():
 	prepare_mow()
+	#prepare_stab()
 
 
 func _on_knife_attack_sequence_finished():
