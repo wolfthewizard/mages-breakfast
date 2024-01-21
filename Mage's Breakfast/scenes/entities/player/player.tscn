@@ -30,5 +30,4 @@ margin = 0.001
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
 current = true
 size = 0.1
-near = 0.01
-far = 1.0
+near = 0.001

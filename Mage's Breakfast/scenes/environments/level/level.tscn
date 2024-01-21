@@ -27,13 +27,28 @@ glow_enabled = true
 [node name="Level" type="Node3D"]
 script = ExtResource("1_b04xe")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_uff6i")
 
-[node name="Player" parent="." instance=ExtResource("1_e26tj")]
+[node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_e26tj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00849494, 0)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="."]
+[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.106814, 0)
 light_energy = 0.1
 light_size = 0.01
@@ -43,14 +58,25 @@ shadow_normal_bias = 2.0
 spot_range = 1.0
 spot_angle = 40.0
 
-[node name="Toast" parent="." instance=ExtResource("2_sqals")]
+[node name="Toast" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_sqals")]
 
-[node name="Knife" parent="." node_paths=PackedStringArray("player") instance=ExtResource("3_6ucxa")]
+[node name="Knife" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("3_6ucxa")]
 transform = Transform3D(-6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0, 1.5, 0.15, 0.25, 0)
 player = NodePath("../Player")
 
-[node name="Mage" parent="." node_paths=PackedStringArray("knife") instance=ExtResource("4_5tvat")]
+[node name="Mage" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("knife") instance=ExtResource("4_5tvat")]
 knife = NodePath("../Knife")
+
+[node name="Decorations" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="fork" parent="SubViewportContainer/SubViewport/Decorations" instance=ExtResource("8_iehgv")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.124978, 0, 0)
+
+[node name="plate" parent="SubViewportContainer/SubViewport/Decorations" instance=ExtResource("9_sva6d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00359157, 0)
+
+[node name="table" parent="SubViewportContainer/SubViewport/Decorations" instance=ExtResource("10_uvkax")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.804055, -0.404338)
 
 [node name="GameOver" parent="." instance=ExtResource("6_eut7i")]
 visible = false
@@ -58,15 +84,4 @@ visible = false
 [node name="Pause" parent="." instance=ExtResource("7_lgdpi")]
 visible = false
 
-[node name="Decorations" type="Node3D" parent="."]
-
-[node name="fork" parent="Decorations" instance=ExtResource("8_iehgv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.124978, 0, 0)
-
-[node name="plate" parent="Decorations" instance=ExtResource("9_sva6d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00359157, 0)
-
-[node name="table" parent="Decorations" instance=ExtResource("10_uvkax")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.804055, -0.404338)
-
-[connection signal="attack_sequence_finished" from="Knife" to="Mage" method="_on_knife_attack_sequence_finished"]
+[connection signal="attack_sequence_finished" from="SubViewportContainer/SubViewport/Knife" to="SubViewportContainer/SubViewport/Mage" method="_on_knife_attack_sequence_finished"]
