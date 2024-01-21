@@ -23,7 +23,7 @@ func prepare_mow():
 	var dest = Vector3(-source.x, source.y, -source.z)
 	knife.mow_attack(source, dest)
 	var angle = Vector3.FORWARD.signed_angle_to(source.direction_to(dest), Vector3.UP)
-	EventBus.attack_in_preparation.emit(angle, knife.attack_preparation + knife.attack_delay + knife.attack_duration)
+	EventBus.mow_attack_preparing.emit(angle, knife.attack_preparation + knife.attack_delay + knife.attack_duration)
 
 
 func prepare_stab():
@@ -47,6 +47,11 @@ func prepare_whirlwind():
 	var source = Vector3(0, 0.01, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
 	var dest = Vector3(0, 0.01, 0)
 	knife.whirlwind_attack(source, dest, flip_direction)
+	EventBus.whirlwind_attack_preparing.emit(
+		Vector3.FORWARD.signed_angle_to(dest - source, Vector3.UP),
+		flip_direction,
+		knife.attack_preparation + knife.attack_delay * 2 + knife.attack_duration
+	)
 
 
 func _on_attack_timer_timeout():

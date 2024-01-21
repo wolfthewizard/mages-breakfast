@@ -6,7 +6,7 @@ signal start_game
 signal open_settings
 
 # gameplay
-signal attack_in_preparation(angle: float, prep_time: float)
+signal mow_attack_preparing(angle: float, prep_time: float)
 signal stab_attack_preparing(from: Vector2, to: Vector2, prep_time: float)
-signal whirlwind_attack_preparing()
+signal whirlwind_attack_preparing(angle: float, reversed: bool, prep_time: float)
 signal player_cut

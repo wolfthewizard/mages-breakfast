@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dmnw75n7r16fy"]
+[gd_scene load_steps=15 format=3 uid="uid://dmnw75n7r16fy"]
 
 [ext_resource type="Shader" path="res://scenes/entities/butter_layer/attack_overlay.gdshader" id="1_4njvg"]
 [ext_resource type="Script" path="res://scenes/entities/butter_layer/butter_layer.gd" id="1_gouop"]
 [ext_resource type="Texture2D" uid="uid://kctedy4v8bac" path="res://assets/telegraph_arrow.png" id="2_6s0yj"]
 [ext_resource type="Shader" path="res://scenes/entities/butter_layer/telegraph_attack_stab.gdshader" id="4_io6r8"]
+[ext_resource type="Shader" path="res://scenes/entities/butter_layer/telegraph_attack_whirlwind.gdshader" id="5_236df"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m7nhs"]
 albedo_color = Color(1, 1, 0, 1)
@@ -40,6 +41,19 @@ shader_parameter/to = Vector2(-0.5, 0)
 material = SubResource("ShaderMaterial_4cucf")
 size = Vector2(0.1, 0.1)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ki0hy"]
+render_priority = 0
+shader = ExtResource("5_236df")
+shader_parameter/color = Vector3(1, 0.1, 0.1)
+shader_parameter/thickness = 0.35
+shader_parameter/dampening = 0.1
+shader_parameter/angle = 0.0
+shader_parameter/reverse = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pbkd2"]
+material = SubResource("ShaderMaterial_ki0hy")
+size = Vector2(0.1, 0.1)
+
 [node name="ButterLayer" type="AnimatableBody3D"]
 collision_layer = 2
 collision_mask = 0
@@ -68,3 +82,7 @@ skeleton = NodePath("../..")
 transparency = 1.0
 mesh = SubResource("PlaneMesh_xnwba")
 skeleton = NodePath("../..")
+
+[node name="TelegraphAttackWhirlwind" type="MeshInstance3D" parent="Telegraphs"]
+transparency = 1.0
+mesh = SubResource("PlaneMesh_pbkd2")

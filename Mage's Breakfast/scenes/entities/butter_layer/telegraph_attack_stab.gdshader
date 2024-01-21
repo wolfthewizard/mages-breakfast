@@ -23,7 +23,7 @@ void fragment() {
 	float val = uv.x;
 	val = 	smoothstep(-thickness - dampening, -thickness, val) - 
 			smoothstep(thickness, thickness + dampening, val);
-	ALBEDO = val * color;
+	ALBEDO = color;
 	ALPHA *= val;
 }
 
