@@ -1,0 +1,26 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://bv2c77sye0n00"]
+
+[ext_resource type="Texture2D" uid="uid://dul375a3dxabg" path="res://assets/ui/pane.png" id="1_5ysfc"]
+[ext_resource type="Texture2D" uid="uid://cfqlqukulre6f" path="res://assets/ui/pane_brighter.png" id="1_dh76q"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ed5vq"]
+texture = ExtResource("1_dh76q")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0i68o"]
+texture = ExtResource("1_5ysfc")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[resource]
+Button/colors/font_outline_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+Button/constants/outline_size = 32
+Button/font_sizes/font_size = 48
+Button/styles/hover = SubResource("StyleBoxTexture_ed5vq")
+Button/styles/normal = SubResource("StyleBoxTexture_0i68o")
+Label/font_sizes/font_size = 48
