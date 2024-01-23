@@ -3,6 +3,7 @@ class_name Mage extends Node3D
 
 @export var knife: Knife
 @export var butter_layer: ButterLayer
+@export var player: Player
 @export var mow_attack_distance: float = 0.15
 @export var stab_attack_distance: float = 0.3
 
@@ -29,13 +30,8 @@ func prepare_mow():
 func prepare_stab():
 	var angle: float = randf_range(0, TAU)
 	var source = Vector3(0, 0.01, stab_attack_distance).rotated(Vector3.UP, angle)
-	angle += PI / 4
-	angle = fmod(angle, TAU)
-	var on_x: bool = fmod(angle, PI) < PI / 2
-	#var dest_point = randf_range(-0.025, 0.025)
-	var dest_point = randf_range(-0.025, 0.025)
-	dest_point += 0.025 if dest_point > 0 else -0.025
-	var dest = Vector3(dest_point, 0.01, 0) if on_x else Vector3(0, 0.01, dest_point)
+	var dest = Vector3(player.global_position.x, 0.01, player.global_position.z)
+	dest += Vector3(randf_range(-0.01, 0.01), 0, randf_range(-0.01, 0.01))
 	knife.stab_attack(source, dest)
 	EventBus.stab_attack_preparing.emit(
 		Vector2(source.x, -source.z) / 0.05, 
@@ -57,13 +53,13 @@ func prepare_whirlwind():
 
 
 func _on_attack_timer_timeout():
-	#var decider = randf()
-	#if decider < ATTACK_THRESHOLDS[0]:
-		#prepare_mow()
-	#elif decider < ATTACK_THRESHOLDS[1]:
+	var decider = randf()
+	if decider < ATTACK_THRESHOLDS[0]:
+		prepare_mow()
+	elif decider < ATTACK_THRESHOLDS[1]:
 		prepare_stab()
-	#else:
-		#prepare_whirlwind()
+	else:
+		prepare_whirlwind()
 
 
 func _on_knife_attack_sequence_finished():

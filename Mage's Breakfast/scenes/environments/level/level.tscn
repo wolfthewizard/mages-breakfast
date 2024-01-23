@@ -64,8 +64,11 @@ spot_angle = 40.0
 transform = Transform3D(-6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0, 1.5, 0.15, 0.25, 0)
 player = NodePath("../Player")
 
-[node name="Mage" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("knife") instance=ExtResource("4_5tvat")]
+[node name="Mage" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("knife", "player") instance=ExtResource("4_5tvat")]
 knife = NodePath("../Knife")
+player = NodePath("../Player")
+mow_attack_distance = 0.15
+stab_attack_distance = 0.3
 
 [node name="Decorations" type="Node3D" parent="SubViewportContainer/SubViewport"]
 
