@@ -32,12 +32,17 @@ func prepare_stab():
 	angle += PI / 4
 	angle = fmod(angle, TAU)
 	var on_x: bool = fmod(angle, PI) < PI / 2
+	#var dest_point = randf_range(-0.025, 0.025)
 	var dest_point = randf_range(-0.025, 0.025)
+	dest_point += 0.025 if dest_point > 0 else -0.025
 	var dest = Vector3(dest_point, 0.01, 0) if on_x else Vector3(0, 0.01, dest_point)
 	knife.stab_attack(source, dest)
+	print(Vector2(source.z, source.x) / 0.05)
+	print(Vector2(dest.z, dest.x) / 0.05)
+	print()
 	EventBus.stab_attack_preparing.emit(
-		Vector2(source.z, source.x), 
-		Vector2(dest.z, dest.x), 
+		Vector2(source.x, -source.z) / 0.05, 
+		Vector2(dest.x, -dest.z) / 0.05, 
 		knife.attack_preparation + knife.attack_delay + knife.attack_duration
 	)
 
@@ -55,13 +60,13 @@ func prepare_whirlwind():
 
 
 func _on_attack_timer_timeout():
-	var decider = randf()
-	if decider < ATTACK_THRESHOLDS[0]:
-		prepare_mow()
-	elif decider < ATTACK_THRESHOLDS[1]:
+	#var decider = randf()
+	#if decider < ATTACK_THRESHOLDS[0]:
+		#prepare_mow()
+	#elif decider < ATTACK_THRESHOLDS[1]:
 		prepare_stab()
-	else:
-		prepare_whirlwind()
+	#else:
+		#prepare_whirlwind()
 
 
 func _on_knife_attack_sequence_finished():
