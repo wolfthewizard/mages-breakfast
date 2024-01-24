@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://deq6kty22btni"]
+
+[ext_resource type="PackedScene" uid="uid://dng8yinlb3xg7" path="res://assets/models/furniture_ground/furniture_ground.glb" id="1_3y17u"]
+
+[node name="furniture_ground" instance=ExtResource("1_3y17u")]
