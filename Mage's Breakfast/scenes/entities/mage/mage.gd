@@ -9,6 +9,7 @@ class_name Mage extends Node3D
 
 @onready var attack_timer: Timer = $AttackTimer
 
+const ELEVATION = 0.001
 const TIME_SCALING_FACTOR = 0.95
 const ATTACK_THRESHOLDS = [
 	0.5,
@@ -20,7 +21,7 @@ var time_scaling: float = 1.0
 
 
 func prepare_mow():
-	var source = Vector3(0, 0.01, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
+	var source = Vector3(0, ELEVATION, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
 	var dest = Vector3(-source.x, source.y, -source.z)
 	knife.mow_attack(source, dest)
 	var angle = Vector3.FORWARD.signed_angle_to(source.direction_to(dest), Vector3.UP)
@@ -29,8 +30,8 @@ func prepare_mow():
 
 func prepare_stab():
 	var angle: float = randf_range(0, TAU)
-	var source = Vector3(0, 0.01, stab_attack_distance).rotated(Vector3.UP, angle)
-	var dest = Vector3(player.global_position.x, 0.01, player.global_position.z)
+	var source = Vector3(0, ELEVATION, stab_attack_distance).rotated(Vector3.UP, angle)
+	var dest = Vector3(player.position.x, ELEVATION, player.position.z)
 	dest += Vector3(randf_range(-0.01, 0.01), 0, randf_range(-0.01, 0.01))
 	knife.stab_attack(source, dest)
 	EventBus.stab_attack_preparing.emit(
@@ -42,8 +43,8 @@ func prepare_stab():
 
 func prepare_whirlwind():
 	var flip_direction: bool = randf() < 0.5
-	var source = Vector3(0, 0.01, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
-	var dest = Vector3(0, 0.01, 0)
+	var source = Vector3(0, ELEVATION, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
+	var dest = Vector3(0, ELEVATION, 0)
 	knife.whirlwind_attack(source, dest, flip_direction)
 	EventBus.whirlwind_attack_preparing.emit(
 		Vector3.FORWARD.signed_angle_to(dest - source, Vector3.UP),

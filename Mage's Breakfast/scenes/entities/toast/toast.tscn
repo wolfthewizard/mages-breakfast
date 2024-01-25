@@ -50,3 +50,4 @@ mesh = SubResource("ArrayMesh_8rfod")
 skeleton = NodePath("")
 
 [node name="ButterLayer" parent="." instance=ExtResource("2_lyjx7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00341934, 0)

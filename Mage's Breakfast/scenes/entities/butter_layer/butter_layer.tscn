@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dmnw75n7r16fy"]
+[gd_scene load_steps=16 format=3 uid="uid://dmnw75n7r16fy"]
 
 [ext_resource type="Shader" path="res://scenes/entities/butter_layer/attack_overlay.gdshader" id="1_4njvg"]
 [ext_resource type="Script" path="res://scenes/entities/butter_layer/butter_layer.gd" id="1_gouop"]
@@ -11,10 +11,10 @@ albedo_color = Color(1, 1, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_287hq"]
 material = SubResource("StandardMaterial3D_m7nhs")
-size = Vector3(0.1, 0.01, 0.1)
+size = Vector3(0.1, 0.002, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7yy7f"]
-size = Vector3(0.1, 0.01, 0.1)
+size = Vector3(0.1, 0.002, 0.1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ytsl2"]
 render_priority = 0
@@ -54,35 +54,49 @@ shader_parameter/reverse = false
 material = SubResource("ShaderMaterial_ki0hy")
 size = Vector2(0.1, 0.1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_lkwcv"]
+size = Vector3(0.1, 0.01, 0.1)
+
 [node name="ButterLayer" type="AnimatableBody3D"]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_gouop")
 
 [node name="ButterMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00165316, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
 mesh = SubResource("BoxMesh_287hq")
 
 [node name="ButterCollision" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.001, 0)
 shape = SubResource("BoxShape3D_7yy7f")
 
 [node name="TopCenterPoint" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.007, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002, 0)
 
-[node name="Telegraphs" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.007, 0)
+[node name="Telegraphs" type="Node3D" parent="TopCenterPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000774119, 0)
 
-[node name="TelegraphAttackMow" type="MeshInstance3D" parent="Telegraphs"]
+[node name="TelegraphAttackMow" type="MeshInstance3D" parent="TopCenterPoint/Telegraphs"]
 transparency = 1.0
 mesh = SubResource("PlaneMesh_nq7mb")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="TelegraphAttackStab" type="MeshInstance3D" parent="Telegraphs"]
+[node name="TelegraphAttackStab" type="MeshInstance3D" parent="TopCenterPoint/Telegraphs"]
 transparency = 1.0
 mesh = SubResource("PlaneMesh_xnwba")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="TelegraphAttackWhirlwind" type="MeshInstance3D" parent="Telegraphs"]
+[node name="TelegraphAttackWhirlwind" type="MeshInstance3D" parent="TopCenterPoint/Telegraphs"]
 transparency = 1.0
 mesh = SubResource("PlaneMesh_pbkd2")
+
+[node name="SpreadArea" type="Area3D" parent="TopCenterPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.005, 0)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TopCenterPoint/SpreadArea"]
+shape = SubResource("BoxShape3D_lkwcv")
+
+[connection signal="area_entered" from="TopCenterPoint/SpreadArea" to="." method="_on_spread_area_area_entered"]
+[connection signal="area_exited" from="TopCenterPoint/SpreadArea" to="." method="_on_spread_area_area_exited"]

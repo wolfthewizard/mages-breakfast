@@ -3,10 +3,19 @@ extends Node3D
 
 @onready var game_over = $GameOver
 @onready var pause = $Pause
+@onready var butter_top_center = $SubViewportContainer/SubViewport/LevelElements/Toast/ButterLayer/TopCenterPoint
+@onready var player = $SubViewportContainer/SubViewport/Player
+@onready var knife = $SubViewportContainer/SubViewport/Knife
+@onready var spotlight = $SubViewportContainer/SubViewport/LevelElements/SpotLight3D
+@onready var butter_layer = $SubViewportContainer/SubViewport/LevelElements/Toast/ButterLayer
 
 
 func _ready():
 	EventBus.player_cut.connect(_on_player_cut)
+	player.reparent(butter_top_center)
+	knife.reparent(butter_top_center)
+	spotlight.reparent(butter_top_center)
+	butter_layer.knife = knife
 
 
 func _unhandled_input(event):
