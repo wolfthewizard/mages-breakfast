@@ -1,32 +1,12 @@
-[gd_scene load_steps=18 format=3 uid="uid://22fg3ja4i2yc"]
+[gd_scene load_steps=8 format=3 uid="uid://22fg3ja4i2yc"]
 
 [ext_resource type="Script" path="res://scenes/environments/level/level.gd" id="1_b04xe"]
 [ext_resource type="PackedScene" uid="uid://1xos702r1o27" path="res://scenes/entities/player/player.tscn" id="1_e26tj"]
-[ext_resource type="PackedScene" uid="uid://dg4yecaox8lhp" path="res://scenes/entities/toast/toast.tscn" id="2_sqals"]
+[ext_resource type="PackedScene" uid="uid://c6ih3x5y6k4nv" path="res://scenes/environments/level_elements/level_elements.tscn" id="2_va6ep"]
 [ext_resource type="PackedScene" uid="uid://dt1gk0r2prpa3" path="res://scenes/entities/knife/knife.tscn" id="3_6ucxa"]
 [ext_resource type="PackedScene" uid="uid://d1imseaepoh2n" path="res://scenes/entities/mage/mage.tscn" id="4_5tvat"]
 [ext_resource type="PackedScene" uid="uid://ow23n1crj4ft" path="res://scenes/gui/game_over/game_over.tscn" id="6_eut7i"]
-[ext_resource type="PackedScene" uid="uid://c883isqqe3nip" path="res://assets/models/furniture_free/chair.glb" id="6_kcvfj"]
 [ext_resource type="PackedScene" uid="uid://1hsucvccu86" path="res://scenes/gui/pause/pause.tscn" id="7_lgdpi"]
-[ext_resource type="PackedScene" uid="uid://dotjgdvxra5xo" path="res://assets/fork.glb" id="8_iehgv"]
-[ext_resource type="PackedScene" uid="uid://bw7iwc78rrfke" path="res://assets/plate.glb" id="9_sva6d"]
-[ext_resource type="MeshLibrary" uid="uid://0c8a5daegxhg" path="res://assets/models/furniture_ground/furniture_ground.tres" id="10_exncn"]
-[ext_resource type="PackedScene" uid="uid://rqstoeg74s3e" path="res://assets/table.glb" id="10_uvkax"]
-[ext_resource type="MeshLibrary" uid="uid://d0hgh77fafnx1" path="res://assets/models/furniture_air/cabinet.tres" id="11_e6rhi"]
-[ext_resource type="MeshLibrary" uid="uid://bss3meh4vig0w" path="res://assets/models/surfaces/surfaces.tres" id="12_c4rsk"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u7etj"]
-sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
-
-[sub_resource type="Sky" id="Sky_thrag"]
-sky_material = SubResource("ProceduralSkyMaterial_u7etj")
-
-[sub_resource type="Environment" id="Environment_uff6i"]
-background_mode = 2
-sky = SubResource("Sky_thrag")
-tonemap_mode = 2
-glow_enabled = true
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_b04xe")
@@ -46,23 +26,10 @@ handle_input_locally = false
 size = Vector2i(960, 540)
 render_target_update_mode = 4
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
-environment = SubResource("Environment_uff6i")
+[node name="LevelElements" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_va6ep")]
 
 [node name="Player" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_e26tj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00849494, 0)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.106814, 0)
-light_energy = 0.1
-light_size = 0.01
-shadow_enabled = true
-shadow_bias = 0.001
-shadow_normal_bias = 2.0
-spot_range = 1.0
-spot_angle = 40.0
-
-[node name="Toast" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_sqals")]
 
 [node name="Knife" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("player") instance=ExtResource("3_6ucxa")]
 transform = Transform3D(-6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0, 1.5, 0.15, 0.25, 0)
@@ -72,58 +39,8 @@ player = NodePath("../Player")
 knife = NodePath("../Knife")
 player = NodePath("../Player")
 
-[node name="Decorations" type="Node3D" parent="SubViewportContainer/SubViewport"]
-
-[node name="fork" parent="SubViewportContainer/SubViewport/Decorations" instance=ExtResource("8_iehgv")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.124978, 0, 0)
-
-[node name="plate" parent="SubViewportContainer/SubViewport/Decorations" instance=ExtResource("9_sva6d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00359157, 0)
-
-[node name="table" parent="SubViewportContainer/SubViewport/Decorations" instance=ExtResource("10_uvkax")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -0.00271732, -0.968508, -0.404338)
-
-[node name="Gridmaps" type="Node3D" parent="SubViewportContainer/SubViewport/Decorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.240102, -1.4554, -2.69905)
-
-[node name="FurnitureGround" type="GridMap" parent="SubViewportContainer/SubViewport/Decorations/Gridmaps"]
-mesh_library = ExtResource("10_exncn")
-cell_size = Vector3(1, 1, 1)
-data = {
-"cells": PackedInt32Array(2, 65535, 1441792, 2, 0, 1441793, 2, 1, 1441794, 2, 2, 1441795, 2, 3, 1441796)
-}
-metadata/_editor_floor_ = Vector3(0, 0, 0)
-
-[node name="FurnitureAir" type="GridMap" parent="SubViewportContainer/SubViewport/Decorations/Gridmaps"]
-mesh_library = ExtResource("11_e6rhi")
-cell_size = Vector3(1, 1, 1)
-data = {
-"cells": PackedInt32Array(2, 65535, 1441792, 2, 0, 1441792, 2, 1, 1441792)
-}
-
-[node name="Surfaces" type="GridMap" parent="SubViewportContainer/SubViewport/Decorations/Gridmaps"]
-mesh_library = ExtResource("12_c4rsk")
-cell_size = Vector3(1, 1, 1)
-data = {
-"cells": PackedInt32Array(0, 0, 1441792, 0, 65535, 1441792, 65535, 65535, 1441792, 65535, 0, 1441792, 0, 1, 1048576, 65535, 1, 1441792, 1, 65535, 1441792, 1, 0, 1441792, 1, 1, 1441792, 1, 2, 1441792, 0, 2, 1441792, 0, 3, 1441792, 65535, 3, 1441792, 65535, 2, 1441792, 1, 3, 1441792, 2, 65535, 1441792, 2, 0, 1441792, 2, 1, 1441792, 2, 2, 1441792, 2, 3, 1441792, 3, 65535, 1441793, 3, 0, 1441793, 3, 1, 1441793, 3, 2, 1441793, 3, 3, 1441793, 2, 4, 655361, 1, 4, 655361, 0, 4, 655361, 65535, 4, 655361, 2, 65534, 1, 1, 65534, 1, 0, 65534, 2, 65535, 65534, 1, 65534, 3, 1048577, 65534, 2, 1048577, 65534, 1, 1048577, 65534, 0, 1048577, 65534, 65535, 1048577)
-}
-
-[node name="Chairs" type="Node3D" parent="SubViewportContainer/SubViewport/Decorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.963811, 0)
-
-[node name="chair" parent="SubViewportContainer/SubViewport/Decorations/Chairs" instance=ExtResource("6_kcvfj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.278919)
-
-[node name="chair2" parent="SubViewportContainer/SubViewport/Decorations/Chairs" instance=ExtResource("6_kcvfj")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -0.911487)
-
-[node name="chair3" parent="SubViewportContainer/SubViewport/Decorations/Chairs" instance=ExtResource("6_kcvfj")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.569132, 0, -0.369914)
-
 [node name="GameOver" parent="." instance=ExtResource("6_eut7i")]
 visible = false
 
 [node name="Pause" parent="." instance=ExtResource("7_lgdpi")]
 visible = false
-
-[connection signal="attack_sequence_finished" from="SubViewportContainer/SubViewport/Knife" to="SubViewportContainer/SubViewport/Mage" method="_on_knife_attack_sequence_finished"]
