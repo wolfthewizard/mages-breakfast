@@ -10,6 +10,8 @@ class_name Mage extends Node3D
 @onready var attack_timer: Timer = $AttackTimer
 
 const ELEVATION = 0.001
+const IDLE_ELEVATION = 0.25
+const IDLE_DISTANCE = 0.15
 const TIME_SCALING_FACTOR = 0.95
 const ATTACK_THRESHOLDS = [
 	0.5,
@@ -18,22 +20,27 @@ const ATTACK_THRESHOLDS = [
 ]
 
 var time_scaling: float = 1.0
+var idle_base = Vector3(0, IDLE_ELEVATION, IDLE_DISTANCE)
 
 
 func prepare_mow():
-	var source = Vector3(0, ELEVATION, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
+	var base_vector = Vector3(0, ELEVATION, mow_attack_distance)
+	var angle = randf_range(0, TAU)
+	var source = base_vector.rotated(Vector3.UP, angle)
 	var dest = Vector3(-source.x, source.y, -source.z)
-	knife.mow_attack(source, dest)
-	var angle = Vector3.FORWARD.signed_angle_to(source.direction_to(dest), Vector3.UP)
-	EventBus.mow_attack_preparing.emit(angle, knife.attack_preparation + knife.attack_delay + knife.attack_duration)
+	var finishing_pos = idle_base.rotated(Vector3.UP, angle + PI)
+	knife.mow_attack(source, dest, finishing_pos)
+	var dir_angle = Vector3.FORWARD.signed_angle_to(source.direction_to(dest), Vector3.UP)
+	EventBus.mow_attack_preparing.emit(dir_angle, knife.attack_preparation + knife.attack_delay + knife.attack_duration)
 
 
 func prepare_stab():
 	var angle: float = randf_range(0, TAU)
 	var source = Vector3(0, ELEVATION, stab_attack_distance).rotated(Vector3.UP, angle)
 	var dest = Vector3(player.position.x, ELEVATION, player.position.z)
+	var finishing_pos = idle_base.rotated(Vector3.UP, angle)
 	dest += Vector3(randf_range(-0.01, 0.01), 0, randf_range(-0.01, 0.01))
-	knife.stab_attack(source, dest)
+	knife.stab_attack(source, dest, finishing_pos)
 	EventBus.stab_attack_preparing.emit(
 		Vector2(source.x, -source.z) / 0.05, 
 		Vector2(dest.x, -dest.z) / 0.05, 
@@ -42,10 +49,12 @@ func prepare_stab():
 
 
 func prepare_whirlwind():
+	var angle = randf_range(0, TAU)
 	var flip_direction: bool = randf() < 0.5
-	var source = Vector3(0, ELEVATION, mow_attack_distance).rotated(Vector3.UP, randf_range(0, TAU))
+	var source = Vector3(0, ELEVATION, mow_attack_distance).rotated(Vector3.UP, angle)
 	var dest = Vector3(0, ELEVATION, 0)
-	knife.whirlwind_attack(source, dest, flip_direction)
+	var finishing_pos = idle_base.rotated(Vector3.UP, angle)
+	knife.whirlwind_attack(source, dest, finishing_pos, flip_direction)
 	EventBus.whirlwind_attack_preparing.emit(
 		Vector3.FORWARD.signed_angle_to(dest - source, Vector3.UP),
 		flip_direction,

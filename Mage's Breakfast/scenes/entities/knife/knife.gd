@@ -27,8 +27,7 @@ var tween: Tween
 var is_spreading: bool = false
 
 
-func mow_attack(from: Vector3, to: Vector3):
-	var original_position = position
+func mow_attack(from: Vector3, to: Vector3, finishing_pos: Vector3):
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
 		).scaled(original_basis.get_scale())
@@ -39,13 +38,12 @@ func mow_attack(from: Vector3, to: Vector3):
 	tween.tween_property(self, "position", to, attack_duration
 		).set_delay(attack_delay)
 	tween.tween_callback(func(): is_spreading = false)
-	tween.tween_property(self, "position", original_position, attack_preparation)
+	tween.tween_property(self, "position", finishing_pos, attack_preparation)
 	tween.parallel().tween_property(self, "basis", original_basis, attack_preparation)
 	tween.tween_callback(func(): attack_sequence_finished.emit())
 
 
-func stab_attack(from: Vector3, to: Vector3):
-	var original_position = position
+func stab_attack(from: Vector3, to: Vector3, finishing_pos: Vector3):
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
 		).rotated(Vector3.UP, -PI / 2
@@ -61,13 +59,12 @@ func stab_attack(from: Vector3, to: Vector3):
 		).set_delay(stab_attack_linger)
 	tween.tween_property(self, "position", from, attack_preparation)
 	tween.tween_callback(func(): is_spreading = false)
-	tween.tween_property(self, "position", original_position, attack_preparation)
+	tween.tween_property(self, "position", finishing_pos, attack_preparation)
 	tween.parallel().tween_property(self, "basis", original_basis, attack_preparation)
 	tween.tween_callback(func(): attack_sequence_finished.emit())
 
 
-func whirlwind_attack(from: Vector3, to: Vector3, flip_direction: bool):
-	var original_position = position
+func whirlwind_attack(from: Vector3, to: Vector3, finishing_pos: Vector3, flip_direction: bool):
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
 		).rotated(Vector3.UP, -PI / 2
@@ -88,7 +85,7 @@ func whirlwind_attack(from: Vector3, to: Vector3, flip_direction: bool):
 		).set_trans(Tween.TRANS_LINEAR)
 	tween.tween_callback(func(): rotation.y -= TAU if not flip_direction else -TAU)
 	tween.tween_callback(func(): is_spreading = false)
-	tween.tween_property(self, "position", original_position, attack_preparation
+	tween.tween_property(self, "position", finishing_pos, attack_preparation
 		).set_delay(attack_delay)
 	tween.parallel().tween_property(self, "basis", original_basis, attack_preparation)
 	tween.tween_callback(func(): attack_sequence_finished.emit())

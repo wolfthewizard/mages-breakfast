@@ -38,6 +38,8 @@ player = NodePath("../Player")
 [node name="Mage" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("knife", "player") instance=ExtResource("4_5tvat")]
 knife = NodePath("../Knife")
 player = NodePath("../Player")
+mow_attack_distance = null
+stab_attack_distance = null
 
 [node name="GameOver" parent="." instance=ExtResource("6_eut7i")]
 visible = false

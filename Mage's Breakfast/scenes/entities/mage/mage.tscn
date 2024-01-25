@@ -4,6 +4,8 @@
 
 [node name="Mage" type="Node3D"]
 script = ExtResource("1_6fd7h")
+mow_attack_distance = null
+stab_attack_distance = null
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true

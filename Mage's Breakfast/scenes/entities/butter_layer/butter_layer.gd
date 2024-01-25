@@ -81,9 +81,9 @@ func _on_whirlwind_attack_preparing(angle: float, reversed: bool, prep_time: flo
 	tween.tween_property(telegraph_attack_whirlwind, "transparency", 1.0, prep_time * OVERLAY_FADE_OUT_PART).set_delay(prep_time * OVERLAY_PRESENT_PART)
 
 
-func _on_spread_area_area_entered(area):
+func _on_spread_area_area_entered(_area):
 	knife_in = true
 
 
-func _on_spread_area_area_exited(area):
+func _on_spread_area_area_exited(_area):
 	knife_in = false
