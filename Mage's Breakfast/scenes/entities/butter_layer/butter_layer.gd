@@ -25,6 +25,8 @@ var height: float = 0.002:
 		butter_collision.shape.size.y = height
 		butter_collision.position.y = height / 2
 		top_center_point.position.y = height
+		EventBus.butter_height_changed.emit(height - 0.002)
+
 var knife: Knife
 var knife_in: bool = false
 enum Type {
