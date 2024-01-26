@@ -18,9 +18,19 @@ const ATTACK_THRESHOLDS = [
 	0.85,
 	1
 ]
+const HOVER_HEIGHT = 0.2
+const HOVER_TIME = 5.0
 
 var time_scaling: float = 1.0
 var idle_base = Vector3(0, IDLE_ELEVATION, IDLE_DISTANCE)
+
+
+func _ready():
+	var original_position = position
+	var max_position = position + Vector3(0, HOVER_HEIGHT, 0)
+	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_loops()
+	tween.tween_property(self, "position", max_position, HOVER_TIME / 2)
+	tween.tween_property(self, "position", original_position, HOVER_TIME / 2)
 
 
 func prepare_mow():

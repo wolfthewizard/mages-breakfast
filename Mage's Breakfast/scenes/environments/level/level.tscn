@@ -40,6 +40,7 @@ transform = Transform3D(-6.55671e-08, 1.5, 0, -1.5, -6.55671e-08, 0, 0, 0, 1.5, 
 player = NodePath("../Player")
 
 [node name="Mage" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("knife", "player") instance=ExtResource("4_5tvat")]
+transform = Transform3D(0.926476, 0, -0.376354, 0, 1, 0, 0.376354, 0, 0.926476, 1.02529, -0.662666, -2.51161)
 knife = NodePath("../Knife")
 player = NodePath("../Player")
 

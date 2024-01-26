@@ -1,11 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1imseaepoh2n"]
+[gd_scene load_steps=3 format=3 uid="uid://d1imseaepoh2n"]
 
 [ext_resource type="Script" path="res://scenes/entities/mage/mage.gd" id="1_6fd7h"]
+[ext_resource type="PackedScene" uid="uid://ki2vguxi61xj" path="res://assets/models/entities/mage.glb" id="2_o8u5r"]
 
 [node name="Mage" type="Node3D"]
 script = ExtResource("1_6fd7h")
-mow_attack_distance = null
-stab_attack_distance = null
+
+[node name="Mesh" parent="." instance=ExtResource("2_o8u5r")]
 
 [node name="AttackTimer" type="Timer" parent="."]
 one_shot = true
