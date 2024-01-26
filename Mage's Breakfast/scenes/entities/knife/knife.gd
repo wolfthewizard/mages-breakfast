@@ -34,7 +34,7 @@ func _ready():
 	whoosh_sound_player.playing = false
 
 
-func _process(delta):
+func _process(_delta):
 	if is_spreading and not slide_sound_player.playing:
 		slide_sound_player.play()
 

@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1kpptogytyu6"]
+[gd_scene load_steps=5 format=3 uid="uid://d1kpptogytyu6"]
 
 [ext_resource type="Script" path="res://scenes/environments/menu/menu.gd" id="1_q2y7l"]
 [ext_resource type="PackedScene" uid="uid://c3igs5ut8tcuu" path="res://scenes/gui/start/start.tscn" id="2_sspbq"]
 [ext_resource type="PackedScene" uid="uid://c6ih3x5y6k4nv" path="res://scenes/environments/level_elements/level_elements.tscn" id="2_vlwe3"]
+[ext_resource type="PackedScene" uid="uid://i8ld7xxj4hl2" path="res://scenes/gui/settings/settings.tscn" id="4_i1ifu"]
 
 [node name="Menu" type="Node3D"]
 script = ExtResource("1_q2y7l")
@@ -34,3 +35,6 @@ spring_length = 0.8
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/CameraPivot/SpringArm3D"]
 
 [node name="Start" parent="." instance=ExtResource("2_sspbq")]
+
+[node name="Settings" parent="." instance=ExtResource("4_i1ifu")]
+visible = false

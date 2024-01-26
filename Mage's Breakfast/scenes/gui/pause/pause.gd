@@ -1,6 +1,14 @@
 extends Control
 
 
+func _ready():
+	EventBus.close_settings.connect(_on_settings_closed)
+
+
+func _on_settings_closed():
+	visible = true
+
+
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel") and visible:
 		_on_resume_button_pressed()
@@ -14,7 +22,8 @@ func _on_resume_button_pressed():
 
 
 func _on_settings_button_pressed():
-	pass # Replace with function body.
+	visible = false
+	EventBus.open_settings.emit()
 
 
 func _on_return_button_pressed():

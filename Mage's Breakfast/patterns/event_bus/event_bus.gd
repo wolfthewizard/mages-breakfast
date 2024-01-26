@@ -4,6 +4,7 @@ extends Node
 # gui
 signal start_game
 signal open_settings
+signal close_settings
 
 # gameplay
 signal mow_attack_preparing(angle: float, prep_time: float)
