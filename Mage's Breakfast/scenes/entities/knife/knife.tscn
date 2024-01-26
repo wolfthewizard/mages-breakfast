@@ -1,6 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dt1gk0r2prpa3"]
+[gd_scene load_steps=11 format=3 uid="uid://dt1gk0r2prpa3"]
 
 [ext_resource type="Script" path="res://scenes/entities/knife/knife.gd" id="1_suyes"]
+[ext_resource type="AudioStream" uid="uid://bprr648f4vpuv" path="res://assets/sounds/sfx/whoosh.wav" id="2_7xfkf"]
+[ext_resource type="AudioStream" uid="uid://o43uaxtjnlgx" path="res://assets/sounds/sfx/slide.wav" id="3_0hg7h"]
+[ext_resource type="AudioStream" uid="uid://crp83l273b3pe" path="res://assets/sounds/sfx/slide1.wav" id="4_lklc0"]
+[ext_resource type="AudioStream" uid="uid://dog4qmpejnrwl" path="res://assets/sounds/sfx/slide2.wav" id="5_7q6aa"]
+[ext_resource type="AudioStream" uid="uid://cdknfdwu46tu4" path="res://assets/sounds/sfx/slide3.wav" id="6_yagtk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yjm2p"]
 resource_name = "metal"
@@ -43,6 +48,17 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_mln21")
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_hsyty"]
+streams_count = 4
+stream_0/stream = ExtResource("3_0hg7h")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_lklc0")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_7q6aa")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_yagtk")
+stream_3/weight = 1.0
+
 [node name="Knife" type="Node3D"]
 transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -0.000273779, 1.49012e-08, 0.000445008)
 script = ExtResource("1_suyes")
@@ -59,5 +75,18 @@ collision_layer = 4
 [node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="Killbox"]
 depth = 0.002
 polygon = PackedVector2Array(-0.0470341, 0.0079531, -0.0209992, 0.00830023, 0.0466914, 0.00482892, 0.0470385, -0.0041965, 0.0407901, -0.0121805, 0.0373188, -0.0142633, 0.0161438, -0.0142633, -0.0050312, -0.0118334, -0.0279419, -0.00627929, -0.0432157, -0.00176658, -0.0470341, 0.00205186)
+
+[node name="WhooshSoundPlayer" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(0.666667, 0, 0, 0, 0.666667, 0, 0, 0, 0.666667, 0, 0, 0)
+stream = ExtResource("2_7xfkf")
+volume_db = -50.0
+autoplay = true
+max_distance = 0.07
+bus = &"SFX"
+
+[node name="SlideSoundPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStreamRandomizer_hsyty")
+max_distance = 0.1
+bus = &"SFX"
 
 [connection signal="body_entered" from="Killbox" to="." method="_on_killbox_body_entered"]

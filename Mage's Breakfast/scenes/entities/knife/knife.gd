@@ -3,7 +3,6 @@ class_name Knife extends Node3D
 
 signal attack_sequence_finished
 
-
 @export var player: CharacterBody3D
 @export var attack_preparation: float = 2:
 	get:
@@ -19,6 +18,9 @@ signal attack_sequence_finished
 	get:
 		return whirlwind_attack_duration * time_scaling
 
+@onready var whoosh_sound_player = $WhooshSoundPlayer
+@onready var slide_sound_player = $SlideSoundPlayer
+
 var spreading_factor: float:
 	get:
 		return 1 / time_scaling
@@ -27,7 +29,18 @@ var tween: Tween
 var is_spreading: bool = false
 
 
+func _ready():
+	whoosh_sound_player.play()
+	whoosh_sound_player.playing = false
+
+
+func _process(delta):
+	if is_spreading and not slide_sound_player.playing:
+		slide_sound_player.play()
+
+
 func mow_attack(from: Vector3, to: Vector3, finishing_pos: Vector3):
+	whoosh_sound_player.playing = true
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
 		).scaled(original_basis.get_scale())
@@ -44,6 +57,7 @@ func mow_attack(from: Vector3, to: Vector3, finishing_pos: Vector3):
 
 
 func stab_attack(from: Vector3, to: Vector3, finishing_pos: Vector3):
+	whoosh_sound_player.playing = false
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
 		).rotated(Vector3.UP, -PI / 2
@@ -65,6 +79,7 @@ func stab_attack(from: Vector3, to: Vector3, finishing_pos: Vector3):
 
 
 func whirlwind_attack(from: Vector3, to: Vector3, finishing_pos: Vector3, flip_direction: bool):
+	whoosh_sound_player.playing = false
 	var original_basis = basis
 	var new_basis = Basis.looking_at(to - from, Vector3.UP
 		).rotated(Vector3.UP, -PI / 2

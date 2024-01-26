@@ -5,6 +5,7 @@ class_name Player extends CharacterBody3D
 @onready var spring_arm = $CameraPivot/SpringArm3D
 @onready var player_mesh := $PlayerMesh
 @onready var collision_shape = $CollisionShape3D
+@onready var jump_sound_player = $JumpSoundPlayer
 
 const TURN_SMOOTHING = 0.15
 const SPEED = 0.025
@@ -48,6 +49,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		jump_held = true
+		jump_sound_player.play()
 	
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	var direction = Vector3(input_dir.x, 0, input_dir.y).normalized()
