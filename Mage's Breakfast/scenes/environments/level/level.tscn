@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://22fg3ja4i2yc"]
+[gd_scene load_steps=11 format=3 uid="uid://22fg3ja4i2yc"]
 
 [ext_resource type="Script" path="res://scenes/environments/level/level.gd" id="1_b04xe"]
 [ext_resource type="PackedScene" uid="uid://1xos702r1o27" path="res://scenes/entities/player/player.tscn" id="1_e26tj"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://1hsucvccu86" path="res://scenes/gui/pause/pause.tscn" id="7_lgdpi"]
 [ext_resource type="PackedScene" uid="uid://3i4p7y5rfldu" path="res://scenes/gui/score_display/score_display.tscn" id="8_g8vol"]
 [ext_resource type="PackedScene" uid="uid://i8ld7xxj4hl2" path="res://scenes/gui/settings/settings.tscn" id="8_x2xml"]
+[ext_resource type="AudioStream" uid="uid://b4qutkf8iyx7f" path="res://assets/sounds/music/level_music.mp3" id="10_dtjqk"]
 
 [node name="Level" type="Node3D"]
 script = ExtResource("1_b04xe")
@@ -58,5 +59,10 @@ theme_override_constants/margin_top = 10
 [node name="ScoreDisplay" parent="MarginContainer" instance=ExtResource("8_g8vol")]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_dtjqk")
+autoplay = true
+bus = &"Music"
 
 [connection signal="attack_sequence_finished" from="SubViewportContainer/SubViewport/Knife" to="SubViewportContainer/SubViewport/Mage" method="_on_knife_attack_sequence_finished"]
