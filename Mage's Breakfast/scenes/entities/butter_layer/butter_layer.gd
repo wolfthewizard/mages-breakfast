@@ -58,29 +58,35 @@ func _process(delta):
 
 
 func _on_mow_attack_preparing(angle: float, prep_time: float):
+	telegraph_attack_mow.visible = true
 	attack_type = Type.MOW
 	telegraph_attack_mow.mesh.material.set_shader_parameter("angle", angle)
 	tween = create_tween()
 	tween.tween_property(telegraph_attack_mow, "transparency", OVERLAY_MIN_TRANSPARENCY, prep_time * OVERLAY_FADE_IN_PART)
 	tween.tween_property(telegraph_attack_mow, "transparency", 1.0, prep_time * OVERLAY_FADE_OUT_PART).set_delay(prep_time * OVERLAY_PRESENT_PART)
+	tween.tween_callback(func(): telegraph_attack_mow.visible = false)
 
 
 func _on_stab_attack_preparing(from: Vector2, to: Vector2, prep_time: float):
+	telegraph_attack_stab.visible = true
 	attack_type = Type.STAB
 	telegraph_attack_stab.mesh.material.set_shader_parameter("from", from)
 	telegraph_attack_stab.mesh.material.set_shader_parameter("to", to)
 	tween = create_tween()
 	tween.tween_property(telegraph_attack_stab, "transparency", OVERLAY_MIN_TRANSPARENCY, prep_time * OVERLAY_FADE_IN_PART)
 	tween.tween_property(telegraph_attack_stab, "transparency", 1.0, prep_time * OVERLAY_FADE_OUT_PART).set_delay(prep_time * OVERLAY_PRESENT_PART)
+	tween.tween_callback(func(): telegraph_attack_stab.visible = false)
 
 
 func _on_whirlwind_attack_preparing(angle: float, reversed: bool, prep_time: float):
+	telegraph_attack_whirlwind.visible = true
 	attack_type = Type.WHIRLWIND
 	telegraph_attack_whirlwind.mesh.material.set_shader_parameter("angle", angle)
 	telegraph_attack_whirlwind.mesh.material.set_shader_parameter("reverse", reversed)
 	tween = create_tween()
 	tween.tween_property(telegraph_attack_whirlwind, "transparency", OVERLAY_MIN_TRANSPARENCY, prep_time * OVERLAY_FADE_IN_PART)
 	tween.tween_property(telegraph_attack_whirlwind, "transparency", 1.0, prep_time * OVERLAY_FADE_OUT_PART).set_delay(prep_time * OVERLAY_PRESENT_PART)
+	tween.tween_callback(func(): telegraph_attack_whirlwind.visible = false)
 
 
 func _on_spread_area_area_entered(_area):

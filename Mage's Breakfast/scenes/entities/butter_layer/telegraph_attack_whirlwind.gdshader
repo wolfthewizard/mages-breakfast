@@ -5,19 +5,19 @@ uniform float dampening;
 uniform float angle;
 uniform bool reverse;
 
+float when_lt(float x, float y) {
+  return max(sign(y - x), 0.0);
+}
+
 void fragment() {
 	ALBEDO = color;
 	vec2 uv = (UV - 0.5) * 2.0;
 	float len = length(uv);
 	float ang = atan(uv.y / uv.x);
-	if (uv.x < 0.0) {
-		ang += PI;
-	}
+	ang += PI * when_lt(uv.x, 0.0);
 	ang += angle;
 	uv = vec2(cos(ang), sin(ang)) * len;
-	if (!reverse) {
-		ang = -ang;
-	}
+	ang -= 2.0 * ang * (1.0 - float(reverse));
 	float val1 = fract((ang - TIME) / PI);
 	val1 = sqrt(sqrt(val1));
 	float val2 = uv.x;

@@ -4,6 +4,10 @@ uniform float scaling = 0.33;
 uniform float angle = 0.0;
 uniform float scroll_speed_mult = 0.5;
 
+float when_lt(float x, float y) {
+  return max(sign(y - x), 0.0);
+}
+
 void fragment() {
 	float angle2 = angle + PI;
 	vec2 uv = (UV - 0.5) * 2.0;
@@ -12,9 +16,7 @@ void fragment() {
 	uv = uv / scaling;
 	float len = length(uv);
 	float ang = atan(uv.y / uv.x);
-	if (uv.x < 0.0) {
-		ang += PI;
-	}
+	ang += PI * when_lt(uv.x, 0.0);
 	ang += angle2;
 	uv = vec2(cos(ang), sin(ang)) * len;
 	ALBEDO = texture(source_texture, uv).rgb;

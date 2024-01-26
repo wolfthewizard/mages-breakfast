@@ -10,6 +10,10 @@ func _ready():
 	EventBus.butter_height_changed.connect(score_from_butter_height)
 
 
+func _process(_delta):
+	$Label2.text = "FPS " + str(Engine.get_frames_per_second())
+
+
 func score_from_butter_height(h: float):
 	var volume = h * BUTTER_SIZE * BUTTER_SIZE
 	var kcal = volume * KCAL_PER_M3

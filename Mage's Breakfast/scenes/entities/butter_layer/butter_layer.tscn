@@ -79,16 +79,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.002, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.000774119, 0)
 
 [node name="TelegraphAttackMow" type="MeshInstance3D" parent="TopCenterPoint/Telegraphs"]
+visible = false
 transparency = 1.0
 mesh = SubResource("PlaneMesh_nq7mb")
 skeleton = NodePath("../../..")
 
 [node name="TelegraphAttackStab" type="MeshInstance3D" parent="TopCenterPoint/Telegraphs"]
+visible = false
 transparency = 1.0
 mesh = SubResource("PlaneMesh_xnwba")
 skeleton = NodePath("../../..")
 
 [node name="TelegraphAttackWhirlwind" type="MeshInstance3D" parent="TopCenterPoint/Telegraphs"]
+visible = false
 transparency = 1.0
 mesh = SubResource("PlaneMesh_pbkd2")
 
