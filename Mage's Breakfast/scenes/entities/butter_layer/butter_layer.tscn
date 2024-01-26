@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dmnw75n7r16fy"]
+[gd_scene load_steps=17 format=3 uid="uid://dmnw75n7r16fy"]
 
 [ext_resource type="Shader" path="res://scenes/entities/butter_layer/attack_overlay.gdshader" id="1_4njvg"]
 [ext_resource type="Script" path="res://scenes/entities/butter_layer/butter_layer.gd" id="1_gouop"]
@@ -59,6 +59,9 @@ size = Vector2(0.1, 0.1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_lkwcv"]
 size = Vector3(0.1, 0.01, 0.1)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_y83nu"]
+size = Vector3(0.5, 0.2, 0.5)
+
 [node name="ButterLayer" type="AnimatableBody3D"]
 collision_layer = 2
 collision_mask = 0
@@ -103,5 +106,13 @@ collision_mask = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TopCenterPoint/SpreadArea"]
 shape = SubResource("BoxShape3D_lkwcv")
 
+[node name="KillBox" type="Area3D" parent="TopCenterPoint"]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TopCenterPoint/KillBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.11, 0)
+shape = SubResource("BoxShape3D_y83nu")
+
 [connection signal="area_entered" from="TopCenterPoint/SpreadArea" to="." method="_on_spread_area_area_entered"]
 [connection signal="area_exited" from="TopCenterPoint/SpreadArea" to="." method="_on_spread_area_area_exited"]
+[connection signal="body_entered" from="TopCenterPoint/KillBox" to="." method="_on_kill_box_body_entered"]

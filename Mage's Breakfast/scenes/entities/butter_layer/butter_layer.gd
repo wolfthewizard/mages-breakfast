@@ -95,3 +95,7 @@ func _on_spread_area_area_entered(_area):
 
 func _on_spread_area_area_exited(_area):
 	knife_in = false
+
+
+func _on_kill_box_body_entered(_body):
+	EventBus.player_cut.emit()
